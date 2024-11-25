@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+<!-- Title -->
+{% block head %}
+    <title>Reminder Roost</title>
+{% endblock %}
+
+<!-- Header -->
+
+<!-- Main Content -->
+{% block content %}
+<h1>Update Task</h1>
+<div class="form_wrap">
+    <form action="/update/{{task.id}}" method="POST">
+        <input type="text" name="content" id="content" value="{{task.content}}">
+        <input type="submit" value="Update Task" class="btn">
+    </form>
+</div>
+{% endblock %}
+
+<!-- Footer -->
