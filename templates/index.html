@@ -36,6 +36,12 @@
             <input type="text" name="content" id="content">
             <input type="submit" value="Add Task" class="btn">
         </form>
+
+        {{ macros.button(
+            "Click Me",
+            url="https://www.google.com/",
+            classes="btn")
+        }}
     </div>
 {% endblock %}
 

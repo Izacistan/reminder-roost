@@ -28,20 +28,3 @@ table, th, td {
     max-width: 1200px;
     width: 90%;
 }
-
-/* Button Styles */
-.btn, .button {
-    background-color: var(--blue);
-    border: solid 3px var(--blue);
-    border-radius: 10px;
-    color: var(--white);
-    font-weight: 600;
-    padding: 10px 20px;
-    transition: all ease-in-out 0.235s;
-    text-decoration: none;
-}
-
-.btn:hover, .button:hover {
-    background-color: transparent;
-    color: var(--blue);
-}
