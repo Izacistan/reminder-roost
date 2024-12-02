@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+<!-- Title -->
+{% block head %}
+    <title>Login - Reminder Roost</title>
+{% endblock %}
+
+{% block content %}
+    <h1>Login Page</h1>
+
+    <div class="form_wrap login-form_wrap">
+        <form method="POST">
+            <h2>Login To Your Account</h2>
+            <div class="form-inputs_wrap">
+                <!-- Email Address -->
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    class="form-input form-input_email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter Your Email"
+                >
+
+                <!-- Password -->
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    class="form-input form-input_password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter Your Password"
+                >
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn">Login</button>
+
+        </form>
+    </div>
+{% endblock %}

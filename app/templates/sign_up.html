@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+<!-- Title -->
+{% block head %}
+    <title>Create Account - Reminder Roost</title>
+{% endblock %}
+
+{% block content %}
+    <h1>Sign Up Page</h1>
+
+    <div class="form_wrap sign-up-form_wrap">
+        <form method="POST">
+            <h2>Create an Account</h2>
+            <div class="form-inputs_wrap">
+                <!-- Email Address -->
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    class="form-input form-input_email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter Email"
+                >
+
+                <!-- First Name -->
+                <label for="firstName">First Name</label>
+                <input
+                    type="text"
+                    class="form-input form-input_first-name"
+                    id="firstName"
+                    name="firstName"
+                    placeholder="Enter Your First Name"
+                >
+
+                <!-- Password -->
+                <label for="password1">Password</label>
+                <input
+                    type="password"
+                    class="form-input form-input_password"
+                    id="password1"
+                    name="password1"
+                    placeholder="Enter A Password"
+                >
+
+                <!-- Password -->
+                <label for="password2">Password (Confirm)</label>
+                <input
+                    type="password"
+                    class="form-input form-input_password"
+                    id="password2"
+                    name="password2"
+                    placeholder="Re-enter Your Password"
+                >
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn">Sign Up</button>
+
+        </form>
+    </div>
+{% endblock %}

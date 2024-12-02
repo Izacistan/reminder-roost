@@ -14,7 +14,26 @@
 
     <body>
 
-        <!-- Header Template to go here-->
+        <!-- Header Template to go here -->
+        <header>
+            <nav class="main-nav page-center" aria-label="Main Navigation">
+              <a href="#" class="logo" aria-label="Home">
+                <img src="static/images/rr_placeholder-logo.png" alt="Placeholder logo" width="75" height="75">
+              </a>
+              <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+                <span class="hamburger-bar"></span>
+                <span class="hamburger-bar"></span>
+                <span class="hamburger-bar"></span>
+              </button>
+              <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+<!--                <li><a href="#" class="nav-link">My Tasks</a></li>-->
+<!--                <li><a href="#" class="nav-link">My Account</a></li>-->
+                <li><a href="/login" class="nav-link">Login</a></li> <!-- Add conditional logic based on session to make sure this button only shows up for users NOT signed in -->
+                <li><a href="/sign-up" class="btn">Sign Up</a></li> <!-- Add conditional login based on session to make this either Sign Up or Logout -->
+              </ul>
+            </nav>
+        </header>
 
         <main class="main-content_wrap page-center">
             {% block content %}{% endblock %}
@@ -22,5 +41,7 @@
 
         <!-- Footer Template to go here -->
 
+        <!-- JS Scripts -->
+        <script src="{{ url_for('static', filename='js/toggleMenu.js') }}"></script>
     </body>
 </html>

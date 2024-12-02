@@ -8,6 +8,47 @@ header {
     background-color: var(--orange);
 }
 
+.main-nav {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1em;
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+    height: 100%;
+}
+
+.nav-link {
+	text-decoration: none;
+	color: var(--black);
+	font-weight: 500;
+}
+
+.nav-link:hover {
+	text-decoration: underline;
+}
+
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 0.3rem;
+    z-index: 10;
+}
+
+.hamburger-bar {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+}
+
 /* Footer */
 footer {
     background-color: var(--light-blue);
@@ -27,4 +68,26 @@ table, th, td {
     margin: auto;
     max-width: 1200px;
     width: 90%;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none; /* Hide menu by default */
+        flex-direction: column;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 75%;
+        background-color: #333;
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .nav-links.active {
+        display: flex; /* Show menu when active */
+    }
+
+    .hamburger {
+        display: flex; /* Show hamburger icon on smaller screens */
+    }
 }
