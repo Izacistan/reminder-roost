@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect
 from . import db
-from .models import Todo
+from .models import Task
 
 views = Blueprint('views', __name__)
 
@@ -10,7 +10,7 @@ views = Blueprint('views', __name__)
 def index():
     if request.method == 'POST':
         task_content = request.form['content']  # Grabbing data from <input> where name is 'content'
-        new_task = Todo(content=task_content)
+        new_task = Task(content=task_content)
 
         try:
             db.session.add(new_task)
@@ -19,14 +19,14 @@ def index():
         except:
             return 'There was an issue adding your task.'
     else:
-        tasks = Todo.query.order_by(Todo.date_created).all()
+        tasks = Task.query.order_by(Task.date_created).all()
         return render_template('index.html', tasks=tasks)
 
 
 # Delete task functionality
 @views.route('/delete/<int:id>')
 def delete(id):
-    task_to_delete = Todo.query.get_or_404(id)
+    task_to_delete = Task.query.get_or_404(id)
 
     try:
         db.session.delete(task_to_delete)
@@ -39,7 +39,7 @@ def delete(id):
 # Update task functionality
 @views.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
-    task = Todo.query.get_or_404(id)
+    task = Task.query.get_or_404(id)
 
     if request.method == 'POST':
         task.content = request.form['content']

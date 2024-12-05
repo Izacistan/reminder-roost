@@ -49,6 +49,15 @@ header {
     background-color: white;
 }
 
+/* Success and Error Messages */
+.success-msg {
+    background-color: green;
+}
+
+.error-msg {
+    background-color: red;
+}
+
 /* Footer */
 footer {
     background-color: var(--light-blue);
