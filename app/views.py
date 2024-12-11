@@ -6,13 +6,13 @@ from flask_login import login_required, current_user
 views = Blueprint('views', __name__)
 
 
-# Home page, default
+# Home page
 @views.route('/', methods=['POST', 'GET'])
 @login_required
 def index():
     if request.method == 'POST':
         task_content = request.form['content']  # Grabbing data from <input> where name is 'content'
-        new_task = Task(content=task_content)
+        new_task = Task(content=task_content, user_id=current_user.id)  # Associate the task with the current user
 
         try:
             db.session.add(new_task)
@@ -21,7 +21,8 @@ def index():
         except:
             return 'There was an issue adding your task.'
     else:
-        tasks = Task.query.order_by(Task.date_created).all()
+        # Only fetch tasks for the currently logged-in user
+        tasks = Task.query.filter_by(user_id=current_user.id).order_by(Task.date_created).all()
         return render_template('index.html', user=current_user, tasks=tasks)
 
 
