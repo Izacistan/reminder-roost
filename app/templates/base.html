@@ -25,13 +25,17 @@
                 <span class="hamburger-bar"></span>
                 <span class="hamburger-bar"></span>
               </button>
-              <ul class="nav-links">
-                <li><a href="/" class="nav-link">Home</a></li>
-<!--                <li><a href="#" class="nav-link">My Tasks</a></li>-->
-<!--                <li><a href="#" class="nav-link">My Account</a></li>-->
-                <li><a href="/login" class="nav-link">Login</a></li> <!-- Add conditional logic based on session to make sure this button only shows up for users NOT signed in -->
-                <li><a href="/sign-up" class="btn">Sign Up</a></li> <!-- Add conditional login based on session to make this either Sign Up or Logout -->
-              </ul>
+                <ul class="nav-links">
+                    {% if user.is_authenticated %}
+                      <li><a href="/" class="nav-link">Home</a></li>
+                      <li><a href="#" class="nav-link">My Tasks</a></li>
+                      <li><a href="#" class="nav-link">My Account</a></li>
+                      <li><a href="/logout" class="btn">Logout</a></li>
+                    {% else %}
+                      <li><a href="/login" class="nav-link">Login</a></li>
+                      <li><a href="/sign-up" class="btn">Sign Up</a></li>
+                    {% endif %}
+                </ul>
             </nav>
         </header>
 

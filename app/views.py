@@ -1,12 +1,14 @@
 from flask import Blueprint, render_template, request, redirect
 from . import db
 from .models import Task
+from flask_login import login_required, current_user
 
 views = Blueprint('views', __name__)
 
 
 # Home page, default
 @views.route('/', methods=['POST', 'GET'])
+@login_required
 def index():
     if request.method == 'POST':
         task_content = request.form['content']  # Grabbing data from <input> where name is 'content'
@@ -20,7 +22,7 @@ def index():
             return 'There was an issue adding your task.'
     else:
         tasks = Task.query.order_by(Task.date_created).all()
-        return render_template('index.html', tasks=tasks)
+        return render_template('index.html', user=current_user, tasks=tasks)
 
 
 # Delete task functionality

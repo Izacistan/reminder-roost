@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from . import db
 from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import login_user, login_required, logout_user, current_user #connected to user mix-in, in models.py
 
 auth = Blueprint('auth', __name__)
 
@@ -20,25 +21,34 @@ def login():
         if user:
             if check_password_hash(user.password, password):
                 flash("Logged in successfully!", category='success')
-                return redirect(url_for('views.home'))
+
+                # Log in the user
+                login_user(user, remember=True)
+
+                return redirect(url_for('views.index'))
             else:
                 flash("Incorrect password. Please try again", category='error')
         else:
             flash("No email found. Please try a different one.", category='error')
 
-
-
-    return render_template("login.html")
+    return render_template("login.html", user=current_user)
 
 
 @auth.route('/logout')
+@login_required
 def logout():
-    return "Logout page"
+
+    # Log out the current user
+    logout_user()
+
+    return redirect(url_for('auth.login'))
 
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'POST':
+
+        # These variables will be passed as arguments to future function, to be called here
         email = request.form.get('email')
         first_name = request.form.get('firstName')
         password_1 = request.form.get('password1')
@@ -47,6 +57,7 @@ def sign_up():
         # Check if the provided email exists in the database
         user = User.query.filter_by(email=email).first()
 
+        # Add this code to function later
         # If the provided email already exists, then we prevent a new account from being created. Else, validate the user input.
         if user:
             flash("This email is already being used.", category='error')
@@ -59,13 +70,20 @@ def sign_up():
         elif len(password_1) < 7:
             flash('Password must be at least 7 characters', category='error')
         else:
-            #Add user to the database (move to separate function)
-            new_user = User(email=email, first_name=first_name, password=generate_password_hash(password_1, method='pbkdf2:sha256'))
+            # Add user to the database (move to separate function)
+            new_user = User(email=email, first_name=first_name,
+                            password=generate_password_hash(password_1, method='pbkdf2:sha256'))
+
+            # Add new user to the database
             db.session.add(new_user)
             db.session.commit()
+
+            # Log in the user
+            login_user(user, remember=True)
+
             flash(f"Account created for {first_name}!", category='success')
 
             # Redirect to URL for Home page
             return redirect(url_for('views.index'))
 
-    return render_template("sign_up.html")
+    return render_template("sign_up.html", user=current_user)
