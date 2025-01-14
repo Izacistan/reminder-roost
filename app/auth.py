@@ -3,6 +3,7 @@ from . import db
 from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user #connected to user mix-in, in models.py
+from .utils.auth_func import validate_new_user_info
 
 auth = Blueprint('auth', __name__)
 
@@ -57,22 +58,12 @@ def sign_up():
         # Check if the provided email exists in the database
         user = User.query.filter_by(email=email).first()
 
-        # Add this code to function later
-        # If the provided email already exists, then we prevent a new account from being created. Else, validate the user input.
-        if user:
-            flash("This email is already being used.", category='error')
-        elif len(email) < 4:
-            flash('Email must be greater than 3 characters.', category='error')
-        elif len(first_name) < 2:
-            flash('First name must be greater than 1 character.', category='error')
-        elif password_1 != password_2:
-            flash('Passwords do not match.', category='error')
-        elif len(password_1) < 7:
-            flash('Password must be at least 7 characters', category='error')
-        else:
+        # Validate the provided user information
+        validation_result = validate_new_user_info(user, email, first_name, password_1, password_2)
+
+        if validation_result:
             # Add user to the database (move to separate function)
-            new_user = User(email=email, first_name=first_name,
-                            password=generate_password_hash(password_1, method='pbkdf2:sha256'))
+            new_user = User(email=email, first_name=first_name, password=generate_password_hash(password_1, method='pbkdf2:sha256'))
 
             # Add new user to the database
             db.session.add(new_user)
